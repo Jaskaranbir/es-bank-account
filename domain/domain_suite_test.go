@@ -10,6 +10,8 @@ import (
 
 func TestDomain(t *testing.T) {
 	os.Setenv("LOG_LEVEL", "warn")
+	// E2E tests should not generate any warnings
+	// since all components required are running
 	os.Setenv("EVENTBUS_LOG_LEVEL", "warn")
 
 	RegisterFailHandler(Fail)
