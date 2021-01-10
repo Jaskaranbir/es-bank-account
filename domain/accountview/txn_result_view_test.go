@@ -19,6 +19,7 @@ import (
 
 func TestTxnResultView(t *testing.T) {
 	os.Setenv("LOG_LEVEL", "warn")
+	os.Setenv("EVENTBUS_LOG_LEVEL", "error")
 
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "TxnResultView Suite")

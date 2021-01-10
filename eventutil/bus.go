@@ -96,6 +96,9 @@ func (b *MemoryBus) Publish(msg interface{}) error {
 	b.log.Tracef("%s Releasing locks", logPrefix)
 
 	b.log.Tracef("%s Subscribers count: %d", logPrefix, len(subs))
+	if len(subs) == 0 {
+		b.log.Warn("No subscribers found for action")
+	}
 
 	for _, sub := range subs {
 		sub.lock.RLock()
