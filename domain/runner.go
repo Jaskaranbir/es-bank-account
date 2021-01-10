@@ -54,22 +54,22 @@ func RunRoutines(cfg *RoutinesCfg) error {
 	// Context to monitor all routines collectively
 	mainCtx, mainCancel := context.WithCancel(context.Background())
 
+	// Process-Manager
+	processMgrRun, processMgrCancel := runner.runProcessMgr(cfg.Log, mainCancel, cfg.ProcessMgrCfg)
+	// TxnCreator
+	txnCreatorRun, txnCreatorCancel := runner.runTxnCreator(cfg.Log, mainCancel, cfg.TxnCreatorCfg)
 	// Account
 	accountRun, accountCancel := runner.runAccount(cfg.Log, mainCancel, cfg.AccountCfg)
 	// TxnResultView
 	accountViewRun, accountViewCancel := runner.runAccountView(cfg.Log, mainCancel, cfg.AccountViewCfg)
-	// TxnCreator
-	txnCreatorRun, txnCreatorCancel := runner.runTxnCreator(cfg.Log, mainCancel, cfg.TxnCreatorCfg)
-	// Process-Manager
-	processMgrRun, processMgrCancel := runner.runProcessMgr(cfg.Log, mainCancel, cfg.ProcessMgrCfg)
+	// Writer
+	writerRun, writerCancel := runner.runWriter(cfg.Log, mainCancel, cfg.WriterCfg)
 	// Reader
 	readerRun, readerCancel, err := runner.runReader(cfg.Log, mainCancel, cfg.ReaderCfg)
 	if err != nil {
 		mainCancel()
 		return errors.Wrap(err, "error running reader")
 	}
-	// Writer
-	writerRun, writerCancel := runner.runWriter(cfg.Log, mainCancel, cfg.WriterCfg)
 
 	// ================== Manage routines ==================
 	<-mainCtx.Done()
