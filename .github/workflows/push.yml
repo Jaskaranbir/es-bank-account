@@ -17,4 +17,4 @@ jobs:
               --build
               --force-recreate
               --exit-code-from
-              dapp-fs-test dapp-fs-test
+              es-bank-account-test es-bank-account-test
