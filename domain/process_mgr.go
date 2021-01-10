@@ -205,7 +205,6 @@ func (p *processMgr) pubCreateTxnCmd(errChan chan<- error, msg interface{}) {
 	p.log.Tracef("%s Received event", logPrefix)
 
 	go func() {
-		// defer wg.Done()
 		err := func() error {
 			cmd, err := model.NewCmd(&model.CmdCfg{
 				CorrelationKey: event.ID(),
@@ -242,7 +241,6 @@ func (p *processMgr) pubProcessTxnCmd(errChan chan<- error, msg interface{}) {
 	p.log.Tracef("%s Received event", logPrefix)
 
 	go func() {
-		// defer wg.Done()
 		err := func() error {
 			cmd, err := model.NewCmd(&model.CmdCfg{
 				CorrelationKey: event.ID(),
