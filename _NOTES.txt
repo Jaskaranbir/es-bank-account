@@ -1,0 +1,9 @@
+* The code has been written assuming single-threaded use-case.
+
+* The output will written to a file. A sample output file has also been included.
+
+* Tests can be run using:
+  go test -v ./...
+
+* Code can be run using:
+  go run .
