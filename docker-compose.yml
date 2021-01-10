@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  es-bank-account:
+    image: es-bank-account
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  # Runs unit tests
+  es-bank-account-test:
+    image: es-bank-account-test
+    build:
+      context: .
+      dockerfile: .github/workflows/Dockerfile
