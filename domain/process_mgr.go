@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"sync"
 	"time"
 
 	"github.com/pkg/errors"
@@ -37,7 +36,6 @@ type processMgr struct {
 	reportWrittenEventTimeoutSec int
 
 	eventSubs map[model.EventAction]<-chan interface{}
-	eventWgs  map[model.EventAction]*sync.WaitGroup
 }
 
 // ProcessMgrCfg is config for processMgr.
@@ -74,13 +72,11 @@ func InitProcessMgr(ctx context.Context, cfg *ProcessMgrCfg) error {
 		cfg.ReportWritten,
 	}
 	eventSubs := make(map[model.EventAction]<-chan interface{})
-	eventWgs := make(map[model.EventAction]*sync.WaitGroup)
 	for _, action := range actions {
 		eventSubs[action], err = cfg.Bus.Subscribe(action.String())
 		if err != nil {
 			return errors.Wrapf(err, "error subscribing to event-bus for action: %s", action)
 		}
-		eventWgs[action] = &sync.WaitGroup{}
 	}
 
 	// Create and run manager
@@ -102,7 +98,6 @@ func InitProcessMgr(ctx context.Context, cfg *ProcessMgrCfg) error {
 		reportWrittenEventTimeoutSec: cfg.ReportWrittenEventTimeoutSec,
 
 		eventSubs: eventSubs,
-		eventWgs:  eventWgs,
 	}
 	err = runner.start(ctx)
 	return errors.Wrap(err, "process-loop returned with error")
@@ -134,25 +129,16 @@ func (p *processMgr) start(ctx context.Context) error {
 			}
 			ctxDoneAck = true
 			p.log.Debug("Received context-done signal")
-			for action, wg := range p.eventWgs {
-				p.log.Tracef("[Action: %s]: Waiting for wait-group", action)
-				wg.Wait()
-			}
-			p.log.Trace("All wait-groups returned")
 			err := p.writeReportAndStopLoop(errChan)
 			if err != nil {
 				return errors.Wrap(err, "error processing context-done signal")
 			}
 
 		case msg := <-p.eventSubs[p.txnRead]:
-			wg := p.eventWgs[p.txnRead]
-			// wg.Add(1)
-			p.pubCreateTxnCmd(wg, errChan, msg)
+			p.pubCreateTxnCmd(errChan, msg)
 
 		case msg := <-p.eventSubs[p.txnCreated]:
-			wg := p.eventWgs[p.txnCreated]
-			// wg.Add(1)
-			p.pubProcessTxnCmd(wg, errChan, msg)
+			p.pubProcessTxnCmd(errChan, msg)
 
 		case msg := <-p.eventSubs[p.txnCreateFailed]:
 			p.logCreateTxnFailure(msg)
@@ -205,11 +191,7 @@ func (p *processMgr) writeReportAndStopLoop(errChan chan<- error) error {
 	return nil
 }
 
-func (p *processMgr) pubCreateTxnCmd(
-	wg *sync.WaitGroup,
-	errChan chan<- error,
-	msg interface{},
-) {
+func (p *processMgr) pubCreateTxnCmd(errChan chan<- error, msg interface{}) {
 	if msg == nil {
 		return
 	}
@@ -246,11 +228,7 @@ func (p *processMgr) pubCreateTxnCmd(
 	}()
 }
 
-func (p *processMgr) pubProcessTxnCmd(
-	wg *sync.WaitGroup,
-	errChan chan<- error,
-	msg interface{},
-) {
+func (p *processMgr) pubProcessTxnCmd(errChan chan<- error, msg interface{}) {
 	if msg == nil {
 		return
 	}
