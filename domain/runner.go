@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"sync"
-	"time"
 
 	"github.com/pkg/errors"
 	"golang.org/x/sync/errgroup"
@@ -32,14 +31,6 @@ type RoutinesCfg struct {
 
 	ProcessMgrCfg *ProcessMgrCfg         `validate:"nonnil"`
 	WriterCfg     *writer.CmdListenerCfg `validate:"nonnil"`
-
-	// Since we have no deterministic way to know if
-	// all routines finished processing their tasks
-	// (check README for more details on why), there
-	// needs to be this arbitrary wait.
-	// The duration was chosen as a guess and has
-	// proven sufficient by a number of tests.
-	PostReadWaitIntervalSec int `validate:"min=0"`
 }
 
 // RunRoutines runs domain-routines with provided config.
@@ -55,7 +46,13 @@ func RunRoutines(cfg *RoutinesCfg) error {
 	mainCtx, mainCancel := context.WithCancel(context.Background())
 
 	// Process-Manager
-	processMgrRun, processMgrCancel := runner.runProcessMgr(cfg.Log, mainCancel, cfg.ProcessMgrCfg)
+	// Process-Mgr controls its own return/exist
+	// using a timeout-mechanism between messages.
+	// So any error in some routine would cause that
+	// routine to not process messages and cause
+	// error in process-manager, allowing it to exit.
+	// And so we dont use context-cancel here (yet).
+	processMgrRun, _ := runner.runProcessMgr(cfg.Log, mainCancel, cfg.ProcessMgrCfg)
 	// TxnCreator
 	txnCreatorRun, txnCreatorCancel := runner.runTxnCreator(cfg.Log, mainCancel, cfg.TxnCreatorCfg)
 	// Account
@@ -73,7 +70,6 @@ func RunRoutines(cfg *RoutinesCfg) error {
 
 	// ================== Manage routines ==================
 	<-mainCtx.Done()
-	time.Sleep(time.Duration(cfg.PostReadWaitIntervalSec) * time.Second)
 	// To collect errors from all routines as they close
 	routineErrors := make(map[string]error)
 
@@ -83,6 +79,15 @@ func RunRoutines(cfg *RoutinesCfg) error {
 	if err != nil {
 		err = errors.Wrap(err, "reader returned with error")
 		routineErrors["reader"] = err
+	}
+
+	// Process-manager controls its own exit
+	// based on an internal message-timeout
+	cfg.Log.Tracef("Waiting for ProcessMgr to return")
+	err = processMgrRun.Wait()
+	if err != nil {
+		err = errors.Wrap(err, "process-manager returned with error")
+		routineErrors["processMgr"] = err
 	}
 
 	txnCreatorCancel()
@@ -99,14 +104,6 @@ func RunRoutines(cfg *RoutinesCfg) error {
 	if err != nil {
 		err = errors.Wrap(err, "account returned with error")
 		routineErrors["account"] = err
-	}
-
-	processMgrCancel()
-	cfg.Log.Tracef("Waiting for ProcessMgr to return")
-	err = processMgrRun.Wait()
-	if err != nil {
-		err = errors.Wrap(err, "process-manager returned with error")
-		routineErrors["processMgr"] = err
 	}
 
 	accountViewCancel()

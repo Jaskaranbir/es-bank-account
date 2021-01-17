@@ -66,6 +66,7 @@ var _ = Describe("ProcessMgr", func() {
 				TxnCreateFailed: TxnCreateFailed,
 				ReportWritten:   ReportWritten,
 
+				IdleTimeoutSec:               busMsgReceiveTimeoutSec - 1,
 				ReportWrittenEventTimeoutSec: 2,
 			})
 			if err != nil {
@@ -79,15 +80,12 @@ var _ = Describe("ProcessMgr", func() {
 	})
 
 	AfterEach(func() {
-		// Since we are testing partial flows for
-		// process-manager, we need to force-terminate
-		// the channels so they dont keep blocking.
-		bus.Terminate()
 		processMgrCancel()
 		// Force-terminating channels will cause
 		// errors, so this is a known/intentional
 		// error-case which can be ignored here.
 		_ = processMgrErrGroup.Wait()
+		bus.Terminate()
 	})
 
 	When("transaction-read event received", func() {

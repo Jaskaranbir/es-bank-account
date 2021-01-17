@@ -33,6 +33,7 @@ type processMgr struct {
 	txnCreateFailed model.EventAction
 	reportWritten   model.EventAction
 
+	idleTimeoutSec               int
 	reportWrittenEventTimeoutSec int
 
 	eventSubs map[model.EventAction]<-chan interface{}
@@ -53,7 +54,10 @@ type ProcessMgrCfg struct {
 	TxnCreateFailed model.EventAction `validate:"nonzero"`
 	ReportWritten   model.EventAction `validate:"nonzero"`
 
-	ReportWrittenEventTimeoutSec int `validate:"min=0"`
+	// Closes context if no message
+	// is received within timeout
+	IdleTimeoutSec               int `validate:"min=1"`
+	ReportWrittenEventTimeoutSec int `validate:"min=1"`
 }
 
 // InitProcessMgr validates process-manager
@@ -95,6 +99,7 @@ func InitProcessMgr(ctx context.Context, cfg *ProcessMgrCfg) error {
 		txnCreateFailed: cfg.TxnCreateFailed,
 		reportWritten:   cfg.ReportWritten,
 
+		idleTimeoutSec:               cfg.IdleTimeoutSec,
 		reportWrittenEventTimeoutSec: cfg.ReportWrittenEventTimeoutSec,
 
 		eventSubs: eventSubs,
@@ -106,14 +111,41 @@ func InitProcessMgr(ctx context.Context, cfg *ProcessMgrCfg) error {
 func (p *processMgr) start(ctx context.Context) error {
 	defer p.unsubscribe()
 
-	// Helps collect error from routines
-	errChan := make(chan error, 0)
+	// Helps collect error from routines.
+	// This should not be closed in "defer"
+	// block cos its possible for other routines
+	// to still write to this while they exit
+	// (in a clean/errorless exit, this wont
+	// happen).
+	errChan := make(chan error)
 	// Some tasks need to be completed after
 	// context-done signal is received.
 	// To prevent select-case from executing
-	// context-done multiple times and running
-	// duplicate tasks, this control-var is used.
+	// context-done multiple times, this
+	// control-var is used.
 	ctxDoneAck := false
+	// Closes context when no messages are
+	// detected within specified timeout.
+	timeoutCancelSig := make(chan struct{})
+	defer close(timeoutCancelSig)
+
+	internalCtx, cancel := context.WithCancel(ctx)
+
+	go func() {
+		for {
+			select {
+			case <-internalCtx.Done():
+				return
+			case <-time.After(time.Duration(p.idleTimeoutSec) * time.Second):
+				p.log.Debug(
+					"Timed-out waiting for new messages. Closing internal-context...",
+				)
+				cancel()
+				return
+			case <-timeoutCancelSig:
+			}
+		}
+	}()
 
 	for {
 		// Some operations here run in their own routines to
@@ -123,7 +155,7 @@ func (p *processMgr) start(ctx context.Context) error {
 		// event/command, and so all such cases need to be
 		// able to process concurrently).
 		select {
-		case <-ctx.Done():
+		case <-internalCtx.Done():
 			if ctxDoneAck {
 				continue
 			}
@@ -135,12 +167,15 @@ func (p *processMgr) start(ctx context.Context) error {
 			}
 
 		case msg := <-p.eventSubs[p.txnRead]:
+			timeoutCancelSig <- struct{}{}
 			p.pubCreateTxnCmd(errChan, msg)
 
 		case msg := <-p.eventSubs[p.txnCreated]:
+			timeoutCancelSig <- struct{}{}
 			p.pubProcessTxnCmd(errChan, msg)
 
 		case msg := <-p.eventSubs[p.txnCreateFailed]:
+			timeoutCancelSig <- struct{}{}
 			p.logCreateTxnFailure(msg)
 
 		case err := <-errChan:
@@ -172,6 +207,7 @@ func (p *processMgr) writeReportAndStopLoop(errChan chan<- error) error {
 			select {
 			case <-time.After(time.Duration(p.reportWrittenEventTimeoutSec) * time.Second):
 				return errors.New("timed-out waiting for response from write-service")
+
 			case msg := <-p.eventSubs[p.reportWritten]:
 				event, castSuccess := msg.(model.Event)
 				if !castSuccess {

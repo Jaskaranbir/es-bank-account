@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"strings"
-	"time"
 
 	"github.com/Jaskaranbir/es-bank-account/domain/accountview"
 	"github.com/Jaskaranbir/es-bank-account/domain/reader"
@@ -20,9 +19,15 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
+// This test is intended to check connectivity and
+// general operation of complete application.
+// The intention is to validate basic functionality
+// (refer to individual modules' tests for their
+// specific detailed-tests).
 var _ = Describe("Domain E2E", func() {
-	var bus eventutil.Bus
+	const processMgrIdleTimeoutSec = 5
 
+	var bus eventutil.Bus
 	var ioReader *domain_test.MockReader
 	var testData []txn.CreateTxnReq
 	var ioWriter *domain_test.MockWriter
@@ -101,6 +106,7 @@ var _ = Describe("Domain E2E", func() {
 			TxnCreateFailed: model.TxnCreateFailed,
 			ReportWritten:   model.DataWritten,
 
+			IdleTimeoutSec:               processMgrIdleTimeoutSec,
 			ReportWrittenEventTimeoutSec: 3,
 		}
 
@@ -130,26 +136,20 @@ var _ = Describe("Domain E2E", func() {
 				AccountViewCfg: accountViewCfg,
 				ProcessMgrCfg:  processMgrCfg,
 				WriterCfg:      writerCfg,
-
-				PostReadWaitIntervalSec: 3,
 			})
 			return errors.Wrap(err, "error running domain-routines")
 		})
 	})
 
-	JustBeforeEach(func() {
-		// Allow all routines to concurrently
-		// process data and write result
-		time.Sleep(5 * time.Second)
-	})
-
 	AfterEach(func() {
-		err := routinesGrp.Wait()
-		Expect(err).ToNot(HaveOccurred())
 		bus.Terminate()
 	})
 
-	Specify("I/O validation", func() {
+	Specify("I/O validation", func(done Done) {
+		// Wait for all messages to be processed
+		err := routinesGrp.Wait()
+		Expect(err).ToNot(HaveOccurred())
+
 		expectedResults := make(map[string]bool)
 		for _, testReq := range testData {
 			txnKey := fmt.Sprintf("%s_%s", testReq.ID, testReq.CustomerID)
@@ -163,6 +163,12 @@ var _ = Describe("Domain E2E", func() {
 		for _, result := range results {
 			txnResult := &accountview.TxnResultEntry{}
 			err := json.Unmarshal([]byte(result), txnResult)
+			if err != nil {
+				// Ensure there's no internal error in a
+				// routine which lead to malformed message
+				routinesErr := routinesGrp.Wait()
+				Expect(routinesErr).ToNot(HaveOccurred())
+			}
 			Expect(err).ToNot(HaveOccurred())
 
 			txnKey := fmt.Sprintf("%s_%s", txnResult.ID, txnResult.CustomerID)
@@ -171,5 +177,7 @@ var _ = Describe("Domain E2E", func() {
 		}
 
 		Expect(expectedResults).To(Equal(actualResults))
-	})
+
+		close(done)
+	}, processMgrIdleTimeoutSec+1)
 })

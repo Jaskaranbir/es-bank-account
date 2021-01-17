@@ -184,10 +184,9 @@ func (b *MemoryBus) Unsubscribe(c <-chan interface{}, action string) error {
 	}
 
 	b.log.Tracef("%s Searching matching subscription", logPrefix)
-	for i, sub := range subs {
+	for _, sub := range subs {
 		if c == sub.channel {
 			b.log.Tracef("%s Found matching subscription", logPrefix)
-			subs[i] = subs[0]
 
 			sub.lock.Lock()
 			if sub.isOpen {
@@ -264,7 +263,7 @@ func (b *MemoryBus) drain(c <-chan interface{}) (string, chan<- struct{}) {
 		for {
 			select {
 			case <-closeSig:
-				b.log.Tracef("[%s] Closing drain-routine", drainID)
+				b.log.Tracef("[%s] Closed drain-routine", drainID)
 				return
 			default:
 				<-c

@@ -84,8 +84,6 @@ func main() {
 		AccountViewCfg: accountViewCfg,
 		ProcessMgrCfg:  processMgrCfg,
 		WriterCfg:      writerCfg,
-
-		PostReadWaitIntervalSec: 10,
 	})
 	if err != nil {
 		err = errors.Wrap(err, "error running domain-routines")
@@ -211,7 +209,8 @@ func processMgrRunCfg(
 		TxnCreateFailed: model.TxnCreateFailed,
 		ReportWritten:   model.DataWritten,
 
-		ReportWrittenEventTimeoutSec: 3,
+		IdleTimeoutSec:               globalcfg.ProcessMgrIdleTimeoutSec,
+		ReportWrittenEventTimeoutSec: 2,
 	}
 }
 

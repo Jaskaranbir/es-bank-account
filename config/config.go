@@ -21,6 +21,10 @@ const (
 	OutputFilePath = "output.txt"
 )
 
+// ProcessMgrIdleTimeoutSec IdleTimeout for process-manager.
+// Check process-manager docs for info on idle-timeout.
+const ProcessMgrIdleTimeoutSec = 5
+
 var defaultEnv = map[string]string{
 	"LOG_LEVEL":          "debug",
 	"EVENTBUS_LOG_LEVEL": "info",

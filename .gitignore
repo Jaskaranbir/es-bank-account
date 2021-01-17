@@ -19,3 +19,6 @@
 
 # Dependency directories
 vendor/
+
+# Service-generated file
+output.txt
