@@ -19,6 +19,7 @@ cd $GOPATH/src/github.com/Jaskaranbir/es-bank-account
 
 echo "Running go tests"
 ginkgo -r \
+      --p \
       --v \
       --race \
       --trace \
