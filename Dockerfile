@@ -1,5 +1,5 @@
 # ===> Build Image
-FROM golang:1.13.0-alpine3.10 AS builder
+FROM golang:1.15.6-alpine3.12 AS builder
 LABEL maintainer="Jaskaranbir Dhillon"
 
 ENV CGO_ENABLED=0 \

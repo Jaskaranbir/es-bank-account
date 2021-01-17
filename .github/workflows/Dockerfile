@@ -1,4 +1,4 @@
-FROM golang:1.14.0-stretch
+FROM golang:1.15.6-buster
 LABEL maintainer="Jaskaranbir Dhillon"
 
 LABEL "com.github.actions.icon"="code"
