@@ -21,4 +21,4 @@
 vendor/
 
 # Service-generated file
-output.txt
+/output.txt

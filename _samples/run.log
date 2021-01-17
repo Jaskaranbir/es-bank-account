@@ -1,0 +1,200 @@
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: TxnRead]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: TxnRead]: Subscription added
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: TxnCreated]: Adding subscription
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: CreateTxn]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: CreateTxn]: Subscription added
+2021/01/17 05:09:54 [INFO]: [txn/CmdListener]: Starting command-listener
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: TxnCreated]: Subscription added
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: TxnCreateFailed]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: TxnCreateFailed]: Subscription added
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: DataWritten]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: DataWritten]: Subscription added
+2021/01/17 05:09:54 [INFO]: [ProcessMgr]: Starting process-manager
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: ProcessTxn]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: ProcessTxn]: Subscription added
+2021/01/17 05:09:54 [INFO]: [account/CmdListener]: Starting command-listener
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: AccountDeposited]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: AccountDeposited]: Subscription added
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: AccountWithdrawn]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: AccountWithdrawn]: Subscription added
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: AccountLimitExceeded]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: AccountLimitExceeded]: Subscription added
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: DuplicateTxn]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: DuplicateTxn]: Subscription added
+2021/01/17 05:09:54 [INFO]: [reader]: Started reading
+2021/01/17 05:09:54 [TRACE]: [reader]: [Event: 787d79a1-cfac-4689-af89-1d803d139cfb]: Publishing newly read data
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Publish]: [Action: TxnRead]: [787d79a1-cfac-4689-af89-1d803d139cfb]: Received message
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnRead]: [787d79a1-cfac-4689-af89-1d803d139cfb]: Acquiring locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnRead]: [787d79a1-cfac-4689-af89-1d803d139cfb]: Releasing locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnRead]: [787d79a1-cfac-4689-af89-1d803d139cfb]: Subscribers count: 1
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnRead]: [787d79a1-cfac-4689-af89-1d803d139cfb]: Publishing event
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnRead]: [787d79a1-cfac-4689-af89-1d803d139cfb]: Published event
+2021/01/17 05:09:54 [TRACE]: [reader]: [Event: 787d79a1-cfac-4689-af89-1d803d139cfb]: Published newly read data
+2021/01/17 05:09:54 [DEBUG]: [reader]: Finished reading data
+2021/01/17 05:09:54 [INFO]: [runner]: Reader-routine routine returned
+2021/01/17 05:09:54 [TRACE]: [runner]: Waiting for Reader to return
+2021/01/17 05:09:54 [TRACE]: [runner]: Waiting for ProcessMgr to return
+2021/01/17 05:09:54 [INFO]: [accountView/EventListener]: Starting event-listener
+2021/01/17 05:09:54 [TRACE]: [ProcessMgr]: [Event: 787d79a1-cfac-4689-af89-1d803d139cfb]: [Action: TxnRead]: Received event
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Publish]: [Action: CreateTxn]: [2d77c1dc-5d02-412d-82b8-1b173b18019a]: Received message
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: CreateTxn]: [2d77c1dc-5d02-412d-82b8-1b173b18019a]: Acquiring locks
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Subscribe]: [Action: WriteData]: Adding subscription
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Subscribe]: [Action: WriteData]: Subscription added
+2021/01/17 05:09:54 [INFO]: [writer/CmdListener]: Starting command-listener
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: CreateTxn]: [2d77c1dc-5d02-412d-82b8-1b173b18019a]: Releasing locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: CreateTxn]: [2d77c1dc-5d02-412d-82b8-1b173b18019a]: Subscribers count: 1
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: CreateTxn]: [2d77c1dc-5d02-412d-82b8-1b173b18019a]: Publishing event
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: CreateTxn]: [2d77c1dc-5d02-412d-82b8-1b173b18019a]: Published event
+2021/01/17 05:09:54 [TRACE]: [txn/Aggregate]: [CMD-Action: CreateTxn]: [CMD: 2d77c1dc-5d02-412d-82b8-1b173b18019a]: Creating transaction
+2021/01/17 05:09:54 [TRACE]: [txn/Aggregate]: [CMD-Action: CreateTxn]: [CMD: 2d77c1dc-5d02-412d-82b8-1b173b18019a]: Publishing result event
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Publish]: [Action: TxnCreated]: [2ee6f288-960c-4cad-8fb0-c126e70e47f8]: Received message
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnCreated]: [2ee6f288-960c-4cad-8fb0-c126e70e47f8]: Acquiring locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnCreated]: [2ee6f288-960c-4cad-8fb0-c126e70e47f8]: Releasing locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnCreated]: [2ee6f288-960c-4cad-8fb0-c126e70e47f8]: Subscribers count: 1
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnCreated]: [2ee6f288-960c-4cad-8fb0-c126e70e47f8]: Publishing event
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: TxnCreated]: [2ee6f288-960c-4cad-8fb0-c126e70e47f8]: Published event
+2021/01/17 05:09:54 [TRACE]: [txn/Aggregate]: [CMD-Action: CreateTxn]: [CMD: 2d77c1dc-5d02-412d-82b8-1b173b18019a]: Published result event
+2021/01/17 05:09:54 [TRACE]: [ProcessMgr]: [Event: 2ee6f288-960c-4cad-8fb0-c126e70e47f8]: [Action: TxnCreated]: Received event
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Publish]: [Action: ProcessTxn]: [128f3a5b-0ab8-4978-aa51-e4299272a2a1]: Received message
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: ProcessTxn]: [128f3a5b-0ab8-4978-aa51-e4299272a2a1]: Acquiring locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: ProcessTxn]: [128f3a5b-0ab8-4978-aa51-e4299272a2a1]: Releasing locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: ProcessTxn]: [128f3a5b-0ab8-4978-aa51-e4299272a2a1]: Subscribers count: 1
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: ProcessTxn]: [128f3a5b-0ab8-4978-aa51-e4299272a2a1]: Publishing event
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: ProcessTxn]: [128f3a5b-0ab8-4978-aa51-e4299272a2a1]: Published event
+2021/01/17 05:09:54 [TRACE]: [account/Aggregate]: [CMD-Action: ProcessTxn]: [CMD: 128f3a5b-0ab8-4978-aa51-e4299272a2a1]: Processing transaction
+2021/01/17 05:09:54 [TRACE]: [account/Aggregate]: [CMD-Action: ProcessTxn]: [CMD: 128f3a5b-0ab8-4978-aa51-e4299272a2a1]: [Txn: 15887]: Loading aggregate
+2021/01/17 05:09:54 [TRACE]: [account/Aggregate]: [CMD: 128f3a5b-0ab8-4978-aa51-e4299272a2a1]: [Txn: 15887]: Validating transaction-uniqueness
+2021/01/17 05:09:54 [TRACE]: [account/Aggregate]: [CMD: 128f3a5b-0ab8-4978-aa51-e4299272a2a1]: [Txn: 15887]: Validating daily limits
+2021/01/17 05:09:54 [TRACE]: [account/Aggregate]: [CMD: 128f3a5b-0ab8-4978-aa51-e4299272a2a1]: [Txn: 15887]: Validating weekly limits
+2021/01/17 05:09:54 [TRACE]: [account/Aggregate]: [CMD-Action: ProcessTxn]: [CMD: 128f3a5b-0ab8-4978-aa51-e4299272a2a1]: [Txn: 15887]: [EventAction: AccountWithdrawn] Publishing success-event
+2021/01/17 05:09:54 [DEBUG]: [EventBus]: [Publish]: [Action: AccountWithdrawn]: [968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Received message
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: AccountWithdrawn]: [968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Acquiring locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: AccountWithdrawn]: [968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Releasing locks
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: AccountWithdrawn]: [968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Subscribers count: 1
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: AccountWithdrawn]: [968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Publishing event
+2021/01/17 05:09:54 [TRACE]: [EventBus]: [Publish]: [Action: AccountWithdrawn]: [968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Published event
+2021/01/17 05:09:54 [TRACE]: [account/Aggregate]: [CMD-Action: ProcessTxn]: [CMD: 128f3a5b-0ab8-4978-aa51-e4299272a2a1]: [Txn: 15887]: [EventAction: AccountWithdrawn] Published success-event
+2021/01/17 05:09:54 [TRACE]: [accountView/TxnResultView]: Fetching events from event-repo
+2021/01/17 05:09:54 [TRACE]: [accountView/TxnResultView]: Fetched 1 event(s) from event-repo
+2021/01/17 05:09:54 [TRACE]: [accountView/TxnResultView]: [EventID: 968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Processing event
+2021/01/17 05:09:54 [TRACE]: [accountView/TxnResultView]: [EventID: 968cb6d3-224d-41fb-9cd2-38d5c406b63b]: Processed event
+2021/01/17 05:09:59 [DEBUG]: [ProcessMgr]: Timed-out waiting for new messages. Closing internal-context...
+2021/01/17 05:09:59 [DEBUG]: [ProcessMgr]: Received context-done signal
+2021/01/17 05:09:59 [DEBUG]: [EventBus]: [Publish]: [Action: WriteData]: [c71ca8ff-1139-452b-be0e-921a16a446e9]: Received message
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: WriteData]: [c71ca8ff-1139-452b-be0e-921a16a446e9]: Acquiring locks
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: WriteData]: [c71ca8ff-1139-452b-be0e-921a16a446e9]: Releasing locks
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: WriteData]: [c71ca8ff-1139-452b-be0e-921a16a446e9]: Subscribers count: 1
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: WriteData]: [c71ca8ff-1139-452b-be0e-921a16a446e9]: Publishing event
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: WriteData]: [c71ca8ff-1139-452b-be0e-921a16a446e9]: Published event
+2021/01/17 05:09:59 [DEBUG]: [ProcessMgr]: Waiting for response from writer-service
+2021/01/17 05:09:59 [TRACE]: [writer/Aggregate]: [CMD: c71ca8ff-1139-452b-be0e-921a16a446e9]: Writing result to output-file
+2021/01/17 05:09:59 [TRACE]: [writer/Aggregate]: [CMD: c71ca8ff-1139-452b-be0e-921a16a446e9]: Wrote result to output-file
+2021/01/17 05:09:59 [TRACE]: [writer/Aggregate]: [CMD: c71ca8ff-1139-452b-be0e-921a16a446e9]: [Event: 1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Publishing data-written event
+2021/01/17 05:09:59 [DEBUG]: [EventBus]: [Publish]: [Action: DataWritten]: [1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Received message
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: DataWritten]: [1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Acquiring locks
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: DataWritten]: [1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Releasing locks
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: DataWritten]: [1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Subscribers count: 1
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: DataWritten]: [1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Publishing event
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Publish]: [Action: DataWritten]: [1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Published event
+2021/01/17 05:09:59 [TRACE]: [writer/Aggregate]: [CMD: c71ca8ff-1139-452b-be0e-921a16a446e9]: [Event: 1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: Published data-written event
+2021/01/17 05:09:59 [DEBUG]: [writer/CmdListener]: Unsubscribing from action: WriteData
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: WriteData]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: WriteData]: [DrainID: e9eb49fd-1025-42f7-911d-a662e09afc09]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: WriteData]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: WriteData]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: WriteData]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [writer/CmdListener]: Unsubscribed from action: WriteData
+2021/01/17 05:09:59 [INFO]: [runner]: Writer-routine routine returned
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [e9eb49fd-1025-42f7-911d-a662e09afc09] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [ProcessMgr]: [Event: 1ec9c2c9-9526-40bc-976a-b22dfa7dc54e]: [Action: DataWritten]: Received event
+2021/01/17 05:09:59 [DEBUG]: [ProcessMgr]: Unsubscribing from action: TxnRead
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnRead]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnRead]: [DrainID: d8a5ecb9-3e36-4561-9e48-1a7760075a36]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnRead]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnRead]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnRead]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [ProcessMgr]: Unsubscribed from action: TxnRead
+2021/01/17 05:09:59 [DEBUG]: [ProcessMgr]: Unsubscribing from action: TxnCreated
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreated]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [d8a5ecb9-3e36-4561-9e48-1a7760075a36] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreated]: [DrainID: 6b84da86-8265-47df-8fa6-d8af04933ee3]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreated]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreated]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreated]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [ProcessMgr]: Unsubscribed from action: TxnCreated
+2021/01/17 05:09:59 [DEBUG]: [ProcessMgr]: Unsubscribing from action: TxnCreateFailed
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreateFailed]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreateFailed]: [DrainID: 4231e196-9502-41ed-94f8-8191c3ca11f7]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [6b84da86-8265-47df-8fa6-d8af04933ee3] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreateFailed]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreateFailed]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: TxnCreateFailed]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [ProcessMgr]: Unsubscribed from action: TxnCreateFailed
+2021/01/17 05:09:59 [DEBUG]: [ProcessMgr]: Unsubscribing from action: DataWritten
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DataWritten]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DataWritten]: [DrainID: b5e03e7e-f534-4f28-a5a3-ef154e549ee7]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [4231e196-9502-41ed-94f8-8191c3ca11f7] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DataWritten]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DataWritten]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DataWritten]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [ProcessMgr]: Unsubscribed from action: DataWritten
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [b5e03e7e-f534-4f28-a5a3-ef154e549ee7] Closed drain-routine
+2021/01/17 05:09:59 [INFO]: [runner]: Process-manager routine returned
+2021/01/17 05:09:59 [TRACE]: [runner]: Waiting for TxnCreator to return
+2021/01/17 05:09:59 [DEBUG]: [txn/CmdListener]: Received context-done signal
+2021/01/17 05:09:59 [DEBUG]: [txn/CmdListener]: Unsubscribing from action: CreateTxn
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: CreateTxn]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: CreateTxn]: [DrainID: aa507b54-fd6e-4f5f-8fff-d58cd125ab56]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: CreateTxn]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: CreateTxn]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: CreateTxn]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [txn/CmdListener]: Unsubscribed from action: CreateTxn
+2021/01/17 05:09:59 [INFO]: [runner]: Transaction-creator routine returned
+2021/01/17 05:09:59 [TRACE]: [runner]: Waiting for Account to return
+2021/01/17 05:09:59 [DEBUG]: [account/CmdListener]: Received context-done signal
+2021/01/17 05:09:59 [DEBUG]: [account/CmdListener]: Unsubscribing from action: ProcessTxn
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: ProcessTxn]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [aa507b54-fd6e-4f5f-8fff-d58cd125ab56] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: ProcessTxn]: [DrainID: fe03c73d-e1ee-4338-827c-a2c3d864f36f]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: ProcessTxn]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: ProcessTxn]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: ProcessTxn]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [account/CmdListener]: Unsubscribed from action: ProcessTxn
+2021/01/17 05:09:59 [INFO]: [runner]: Account routine returned
+2021/01/17 05:09:59 [TRACE]: [runner]: Waiting for TxnResultView to return
+2021/01/17 05:09:59 [DEBUG]: [accountView/EventListener]: Received context-done signal
+2021/01/17 05:09:59 [DEBUG]: [accountView/EventListener]: Unsubscribing from action: AccountDeposited
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountDeposited]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountDeposited]: [DrainID: ac2ead9d-40ed-4e17-8c2e-bd1227d2144c]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountDeposited]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [fe03c73d-e1ee-4338-827c-a2c3d864f36f] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountDeposited]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountDeposited]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [accountView/EventListener]: Unsubscribed from action: AccountDeposited
+2021/01/17 05:09:59 [DEBUG]: [accountView/EventListener]: Unsubscribing from action: AccountWithdrawn
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountWithdrawn]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [ac2ead9d-40ed-4e17-8c2e-bd1227d2144c] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountWithdrawn]: [DrainID: 38499482-2536-4b9e-a38d-bd7718d90120]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountWithdrawn]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountWithdrawn]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountWithdrawn]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [38499482-2536-4b9e-a38d-bd7718d90120] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [accountView/EventListener]: Unsubscribed from action: AccountWithdrawn
+2021/01/17 05:09:59 [DEBUG]: [accountView/EventListener]: Unsubscribing from action: AccountLimitExceeded
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountLimitExceeded]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountLimitExceeded]: [DrainID: fdd0eaee-cd6a-4883-ad6e-ef55d8534e89]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountLimitExceeded]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountLimitExceeded]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: AccountLimitExceeded]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [accountView/EventListener]: Unsubscribed from action: AccountLimitExceeded
+2021/01/17 05:09:59 [DEBUG]: [accountView/EventListener]: Unsubscribing from action: DuplicateTxn
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DuplicateTxn]: Unsubscribing events-topic
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DuplicateTxn]: [DrainID: 3c32e534-c14d-4ee4-9d8b-6080426b7f5d]: Started drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DuplicateTxn]: Searching matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DuplicateTxn]: Found matching subscription
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [Unsubscribe]: [Action: DuplicateTxn]: Unsubscribed from events-topic
+2021/01/17 05:09:59 [TRACE]: [accountView/EventListener]: Unsubscribed from action: DuplicateTxn
+2021/01/17 05:09:59 [INFO]: [runner]: Account-view routine returned
+2021/01/17 05:09:59 [TRACE]: [runner]: Waiting for Writer to return
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [fdd0eaee-cd6a-4883-ad6e-ef55d8534e89] Closed drain-routine
+2021/01/17 05:09:59 [TRACE]: [EventBus]: [3c32e534-c14d-4ee4-9d8b-6080426b7f5d] Closed drain-routine
