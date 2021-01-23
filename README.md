@@ -91,6 +91,7 @@ Following are the major components in the system:
 
 ![image](https://user-images.githubusercontent.com/12961957/104849997-bba13e00-58ba-11eb-98d5-0eb077169f7b.png)
 
+\* AccountLimitsExceeded refers to exceeding number of transactions or load-amounts from daily/weekly-limits, or withdrawing with insufficient-funds (check [Use-case](#use-case)).
 
 ### Event-Sourcing implementations
 
