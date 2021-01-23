@@ -503,7 +503,7 @@ var _ = Describe("Account", func() {
 			Expect(txnFailure.Txn.ID).To(Equal("15"))
 		})
 
-		FIt("declines transaction withdraw-amount exceeds account-balance", func() {
+		It("declines transaction withdraw-amount exceeds account-balance", func() {
 			limitExceededSub, err := bus.Subscribe(AccountLimitExceededEvent.String())
 			Expect(err).ToNot(HaveOccurred())
 
