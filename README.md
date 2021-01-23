@@ -6,6 +6,7 @@
 - [Architecture](#architecture)
   * [Bus](#bus)
   * [Components](#components)
+  * [Application Flow](#application-flow)
   * [Event-Sourcing implementations](#event-sourcing-implementations)
   * [Logging](#logging)
   * [Error Handling](#error-handling)
@@ -86,7 +87,7 @@ Following are the major components in the system:
 
 * **[Runner][14]**: Handles lifecycly of above routines.
 
-The application-flow is as follows:
+### Application Flow
 
 ![image](https://user-images.githubusercontent.com/12961957/104849997-bba13e00-58ba-11eb-98d5-0eb077169f7b.png)
 
