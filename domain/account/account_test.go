@@ -502,6 +502,37 @@ var _ = Describe("Account", func() {
 			Expect(txnFailure.FailureCause).To(Equal(DailyLimitsExceeded))
 			Expect(txnFailure.Txn.ID).To(Equal("15"))
 		})
+
+		FIt("declines transaction withdraw-amount exceeds account-balance", func() {
+			limitExceededSub, err := bus.Subscribe(AccountLimitExceededEvent.String())
+			Expect(err).ToNot(HaveOccurred())
+
+			custID := "1"
+			// Add/process sample transactions
+			err = mockCmd(
+				mockCmdCfg{
+					txnID:      "11",
+					customerID: custID,
+					loadAmount: 2500,
+					time:       "2000-01-03T00:00:01Z",
+				},
+				mockCmdCfg{
+					txnID:      "12",
+					customerID: custID,
+					loadAmount: -2501,
+					time:       "2000-01-05T03:04:06Z",
+				},
+			)
+			Expect(err).ToNot(HaveOccurred())
+
+			event := &model.Event{}
+			Eventually(limitExceededSub).Should(Receive(event))
+			txnFailure := &TxnFailure{}
+			err = json.Unmarshal(event.Data(), txnFailure)
+			Expect(err).ToNot(HaveOccurred())
+
+			Expect(txnFailure.Txn.ID).To(Equal("12"))
+		})
 	})
 
 	When("daily and weekly limits are unspecified", func() {

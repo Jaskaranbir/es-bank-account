@@ -41,6 +41,7 @@ type account struct {
 	custID        string
 	dailyTxn      map[int]map[int]TxnRecord
 	weeklyTxn     map[int]map[int]TxnRecord
+	balance       float64
 	txnKeysRecord []string
 }
 
@@ -59,8 +60,9 @@ type State struct {
 	CustID  string
 	TxnTime time.Time
 
-	DailyTxn  TxnRecord
-	WeeklyTxn TxnRecord
+	DailyTxn    TxnRecord
+	WeeklyTxn   TxnRecord
+	TotalAmount float64
 }
 
 // TxnFailure contains data/info for transaction-failure.
@@ -186,11 +188,12 @@ func (a *account) handleProcessTxnCmd(cmd model.Cmd) error {
 	logPrefix = fmt.Sprintf("%s [EventAction: %s]", logPrefix, accEvent)
 
 	state := &State{
-		TxnID:     txn.ID,
-		CustID:    txn.CustomerID,
-		TxnTime:   txn.Time,
-		DailyTxn:  *dailyTxnRecord,
-		WeeklyTxn: *weeklyTxnRecord,
+		TxnID:       txn.ID,
+		CustID:      txn.CustomerID,
+		TxnTime:     txn.Time,
+		DailyTxn:    *dailyTxnRecord,
+		WeeklyTxn:   *weeklyTxnRecord,
+		TotalAmount: a.balance + txn.LoadAmount,
 	}
 	a.log.Tracef("%s Publishing success-event", logPrefix)
 	err = a.publishEvent(cmd.ID(), accEvent, state)
@@ -341,6 +344,9 @@ func (a *account) publishEvent(correlationKey string, action model.EventAction, 
 }
 
 func (a *account) validateLimits(currValues TxnRecord, limits TxnRecord) error {
+	if a.balance+currValues.TotalAmount < 0 {
+		return errors.New("balance less than zero")
+	}
 	if limits.NumTxns > 0 && currValues.NumTxns > limits.NumTxns {
 		return errors.New("limit exceeded for number of deposits")
 	}
@@ -387,6 +393,8 @@ func (a *account) applyEvent(event model.Event) error {
 	a.dailyTxn[txnYear][txnDay] = state.DailyTxn
 	a.weeklyTxn[txnYear][txnWeek] = state.WeeklyTxn
 	a.txnKeysRecord = append(a.txnKeysRecord, state.TxnID)
+
+	a.balance = state.TotalAmount
 
 	return nil
 }
