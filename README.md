@@ -1,3 +1,18 @@
+- [Introduction](#introduction)
+  * [Use-case](#use-case)
+- [Run info](#run-info)
+  * [Running application](#running-application)
+  * [Running tests](#running-tests)
+- [Architecture](#architecture)
+  * [Bus](#bus)
+  * [Components](#components)
+  * [Event-Sourcing implementations](#event-sourcing-implementations)
+  * [Logging](#logging)
+  * [Error Handling](#error-handling)
+  * [Testing](#testing)
+
+---
+
 ## Introduction
 
 This is an example of developing a bank-account like transactional-system using domain-driven-design, event-sourcing, and CQRS.
