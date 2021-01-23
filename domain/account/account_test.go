@@ -531,6 +531,7 @@ var _ = Describe("Account", func() {
 			err = json.Unmarshal(event.Data(), txnFailure)
 			Expect(err).ToNot(HaveOccurred())
 
+			Expect(txnFailure.FailureCause).To(Equal(InsufficientFunds))
 			Expect(txnFailure.Txn.ID).To(Equal("12"))
 		})
 	})

@@ -22,6 +22,7 @@ const (
 	DuplicateTxn         TxnFailureCause = "DuplicateTxn"
 	DailyLimitsExceeded  TxnFailureCause = "DailyLimitsExceeded"
 	WeeklyLimitsExceeded TxnFailureCause = "WeeklyLimitsExceeded"
+	InsufficientFunds    TxnFailureCause = "InsufficientFunds"
 )
 
 // account represents an account for a specific customer.
@@ -262,12 +263,15 @@ func (a *account) checkDailyLimits(
 	dailyTxnRecord.NumTxns++
 	dailyTxnRecord.TotalAmount += txn.LoadAmount
 
-	err := a.validateLimits(dailyTxnRecord, a.dailyLimits)
+	failureCause, err := a.validateLimits(dailyTxnRecord, a.dailyLimits)
 	if err != nil {
+		if failureCause == "" {
+			failureCause = DailyLimitsExceeded
+		}
 		failure := &TxnFailure{
 			Txn:          *txn,
 			Error:        errors.Wrap(err, "failed daily-limits validation").Error(),
-			FailureCause: DailyLimitsExceeded,
+			FailureCause: failureCause,
 		}
 		subLogPrefix := fmt.Sprintf("%s [EventAction: %s]", logPrefix, a.accountLimitExceeded)
 
@@ -306,12 +310,15 @@ func (a *account) checkWeeklyLimits(
 	weeklyTxnRecord.NumTxns++
 	weeklyTxnRecord.TotalAmount += txn.LoadAmount
 
-	err := a.validateLimits(weeklyTxnRecord, a.weeklyLimits)
+	failureCause, err := a.validateLimits(weeklyTxnRecord, a.weeklyLimits)
 	if err != nil {
+		if failureCause == "" {
+			failureCause = WeeklyLimitsExceeded
+		}
 		failure := &TxnFailure{
 			Txn:          *txn,
 			Error:        errors.Wrap(err, "failed weekly-limits validation").Error(),
-			FailureCause: WeeklyLimitsExceeded,
+			FailureCause: failureCause,
 		}
 		subLogPrefix := fmt.Sprintf("%s [EventAction: %s]", logPrefix, a.accountLimitExceeded)
 
@@ -343,21 +350,26 @@ func (a *account) publishEvent(correlationKey string, action model.EventAction, 
 	return errors.Wrap(err, "error storing event in event-repo")
 }
 
-func (a *account) validateLimits(currValues TxnRecord, limits TxnRecord) error {
+// TxnFailureCause is specified if there's a special/specific error.
+// Otherwise TxnFailureCause is blank on generic errors.
+func (a *account) validateLimits(
+	currValues TxnRecord,
+	limits TxnRecord,
+) (TxnFailureCause, error) {
 	if a.balance+currValues.TotalAmount < 0 {
-		return errors.New("balance less than zero")
+		return InsufficientFunds, errors.New("balance less than zero")
 	}
 	if limits.NumTxns > 0 && currValues.NumTxns > limits.NumTxns {
-		return errors.New("limit exceeded for number of deposits")
+		return "", errors.New("limit exceeded for number of deposits")
 	}
 	if limits.TotalAmount > 0 && currValues.TotalAmount > limits.TotalAmount {
-		return fmt.Errorf(
+		return "", fmt.Errorf(
 			"limit exceeded for total load-value by: $%.2f",
 			(currValues.TotalAmount - a.dailyLimits.TotalAmount),
 		)
 	}
 
-	return nil
+	return "", nil
 }
 
 func (a *account) loadAggregate(custID string) error {
